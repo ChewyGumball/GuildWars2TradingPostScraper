@@ -9,5 +9,7 @@ namespace GW2API.TradingPost
     public static class TradingPost
     {
         private static string APIAddress = "https://tradingpost-live.ncplatform.net";
+
+
     }
 }

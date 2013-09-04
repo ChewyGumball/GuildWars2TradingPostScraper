@@ -13,6 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
+using GW2API.Items;
+
 namespace GW2TP
 {
     /// <summary>
@@ -23,6 +26,7 @@ namespace GW2TP
         public MainWindow()
         {
             InitializeComponent();
+            Items.sortItems();
         }
     }
 }
