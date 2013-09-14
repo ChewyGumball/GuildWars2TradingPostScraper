@@ -21,9 +21,29 @@ namespace GW2API.Items
 
         public static void sortItems()
         {
-            readItemIDFile();
-            itemList.OrderBy(e => DateTime.Parse(e.priceLastChanged));
+            List<Item> before = readItemIDFile("itemIDsoriginal.txt");
+            List<Item> after = readItemIDFile("itemIDs.txt");
+            before.OrderBy(e => e.ID);
+            after.OrderBy(e => e.ID);
 
+
+            if (after == before)
+            {
+                Console.Out.Write("AH");
+            }
+            using (TextWriter file = File.CreateText(getFullFilePath("superfast.txt")))
+            {
+                for (int i = 0; i < before.Count; i++)
+                {
+                    if(after[i].maxOffer != 0)
+                    if (after[i].maxOffer - before[i].maxOffer != 0)
+                    {
+                        file.WriteLine("{0} : {1}", before[i].name, after[i].maxOffer - before[i].maxOffer);
+                    }
+                }
+            }
+
+            /*
             DateTime lastWeek = DateTime.Now.AddDays(-7);
             DateTime yesterday = DateTime.Now.AddDays(-1);
             DateTime lastFiveHours = DateTime.Now.AddHours(-5);
@@ -40,22 +60,26 @@ namespace GW2API.Items
                     file.WriteLine("{0} : {1} : {2}", i.ID, i.name, i.priceLastChanged);
                 }
             }
+             * */
+
+
         }
 
-        private static void readItemIDFile()
+        private static List<Item> readItemIDFile(string filename)
         {
             //updateItemIDFile();
-            using (StreamReader sr = File.OpenText(getFullFilePath(itemIDListFileName)))
+            using (StreamReader sr = File.OpenText(getFullFilePath(filename)))
             using (JsonReader reader = new JsonTextReader(sr))
             {
                 JArray array = JObject.Load(reader)["results"] as JArray;
-                itemList = array.ToObject<List<Item>>();
+                List<Item> items = array.ToObject<List<Item>>();
 
-                foreach (Item i in itemList)
+                foreach (Item i in items)
                 {
                     i.priceLastChanged = i.priceLastChanged.Substring(0, 19);
                 }
 
+                return items;
             }
         }
 
