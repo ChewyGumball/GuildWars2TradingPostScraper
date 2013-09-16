@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GW2API.Items
+namespace GW2TPDataUpdater
 {
-    class ItemCollection
+    class Program
     {
-        private Dictionary<int, Item> items;
-
+        static void Main(string[] args)
+        {
+        }
     }
 }

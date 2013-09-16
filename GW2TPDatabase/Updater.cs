@@ -18,7 +18,17 @@ namespace GW2TPDatabase
         private static string fullItemListURI = @"http://www.gw2spidy.com/api/v0.9/json/all-items/all";
         public static void Main()
         {
-            updateDatabase();
+            Item[] items = downloadItemList().ToArray();
+            using (var database = new gw2tpContext())
+            {
+                foreach (Item i in items)
+                {
+                    insertItemData(i, database);
+                }
+
+                database.SaveChanges();
+            }
+            //updateDatabase();
         }
 
         private static void updateDatabase()
@@ -30,7 +40,7 @@ namespace GW2TPDatabase
                 Item[] items = downloadItemList().ToArray();
                 Console.WriteLine("Done.");
 
-                Console.Write("Updating database . . . ");
+                Console.Write("Updating price database . . . ");
                 using (gw2tpContext database = new gw2tpContext())
                 {
                     database.Configuration.AutoDetectChangesEnabled = false;
@@ -38,7 +48,7 @@ namespace GW2TPDatabase
 
                     for(int i = 0; i < items.Length; i++)
                     {
-                        updateItemInDatabase(items[i], database);
+                        insertPriceData(items[i], database);
 
                         //save database every 1000 entries for performance reasons
                         if (i % 1000 == 0)
@@ -61,7 +71,7 @@ namespace GW2TPDatabase
             }
         }
 
-        private static void updateItemInDatabase(Item item, gw2tpContext database)
+        private static void insertPriceData(Item item, gw2tpContext database)
         {
             database.pricedatas.Add(new pricedata { apiID = item.ID, 
                                                     buyDemand = item.buyCount, 
@@ -70,6 +80,23 @@ namespace GW2TPDatabase
                                                     sellSupply = item.saleCount, 
                                                     lastPriceUpdate = item.priceLastChanged,
                                                     lastPriceCheck = DateTime.Now.ToUniversalTime() });
+        }
+
+        private static void insertItemData(Item item, gw2tpContext database)
+        {
+            itemdetail details = new itemdetail { apiID = item.ID,
+                                                  gwID = item.officialID,
+                                                  icon = item.iconURL,
+                                                  level = item.level,
+                                                  name = item.name,
+                                                  rarity = item.rarity,
+                                                  type = item.type,
+                                                  subtype = item.type };
+
+            if (!database.itemdetails.Any(x => x.apiID == item.ID))
+            {
+                database.itemdetails.Add(details);
+            }
         }
     }
 }

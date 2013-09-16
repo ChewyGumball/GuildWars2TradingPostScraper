@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GW2TP", "GW2TP\GW2TP.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GW2API", "GW2API\GW2API.csproj", "{9B14B23A-39E7-4EDA-84A9-FCBE69DFBFFD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GW2TPDatabase", "GW2TPDatabase\GW2TPDatabase.csproj", "{075E1FCE-7EA0-4BA3-9A22-4C49DD905FB1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{9B14B23A-39E7-4EDA-84A9-FCBE69DFBFFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B14B23A-39E7-4EDA-84A9-FCBE69DFBFFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B14B23A-39E7-4EDA-84A9-FCBE69DFBFFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{075E1FCE-7EA0-4BA3-9A22-4C49DD905FB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{075E1FCE-7EA0-4BA3-9A22-4C49DD905FB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{075E1FCE-7EA0-4BA3-9A22-4C49DD905FB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{075E1FCE-7EA0-4BA3-9A22-4C49DD905FB1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
