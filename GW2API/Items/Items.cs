@@ -6,6 +6,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
+
 using GW2API.Common;
 
 namespace GW2API.Items
@@ -21,6 +22,7 @@ namespace GW2API.Items
 
         public static void sortItems()
         {
+            
             List<Item> before = readItemIDFile("itemIDsoriginal.txt");
             List<Item> after = readItemIDFile("itemIDs.txt");
             before.OrderBy(e => e.ID);
@@ -67,19 +69,28 @@ namespace GW2API.Items
 
         private static List<Item> readItemIDFile(string filename)
         {
-            //updateItemIDFile();
-            using (StreamReader sr = File.OpenText(getFullFilePath(filename)))
-            using (JsonReader reader = new JsonTextReader(sr))
+            using (StreamReader stream = File.OpenText(getFullFilePath(filename)))
             {
-                JArray array = JObject.Load(reader)["results"] as JArray;
-                List<Item> items = array.ToObject<List<Item>>();
+                return convertFromJson(stream);
+            }
+        }
 
-                foreach (Item i in items)
-                {
-                    i.priceLastChanged = i.priceLastChanged.Substring(0, 19);
-                }
+        public static List<Item> convertFromJson(string json)
+        {
+            using (StringReader stream = new StringReader(json))
+            {
+                return convertFromJson(stream);
+            }
+        }
 
-                return items;
+        public static List<Item> convertFromJson(TextReader stream)
+        {
+            using (JsonReader reader = new JsonTextReader(stream))
+            {
+                JArray itemArray = JObject.Load(reader)["results"] as JArray;
+                List<Item> itemList = itemArray.ToObject<List<Item>>();
+
+                return itemList;
             }
         }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace GW2API.Items
 {
@@ -34,7 +35,8 @@ namespace GW2API.Items
         public int subType { get; private set; }
 
         [JsonProperty("price_last_changed")]
-        public string priceLastChanged { get; set; }
+        [JsonConverter(typeof(GW2SpidyDateTimeConverter))]
+        public DateTime priceLastChanged { get; private set; }
 
         [JsonProperty("max_offer_unit_price")]
         public int maxOffer { get; private set; }
